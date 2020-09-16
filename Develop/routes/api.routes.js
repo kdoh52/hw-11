@@ -1,5 +1,6 @@
 const uuid = require("uuid").v4;
-const savedNotes = require("../data/saved.data");
+// const savedNotes = require("../data/saved.data");
+const savedNotes = require("../db/db.json");
 
 //ROUTING
 module.exports = (app) => {
@@ -8,9 +9,9 @@ module.exports = (app) => {
 
     // API POST REQUESTS
     app.post('/api/notes', (req, res) => {
-        const noteID = uuid();
+        const id = uuid();
 
-        const data = {...req.body, noteID}
+        const data = {...req.body, id}
 
         savedNotes.push(data)
         res.json({ success: true, noteCreated: true });
@@ -18,6 +19,13 @@ module.exports = (app) => {
 
     // API DELETE REQUESTS
     app.delete('/api/notes/:id', (req, res) => {
+        let chosen = req.params.id;
+
+        for (let i = 0; i < savedNotes.length; i++) {
+            if (chosen === savedNotes[i].id) {
+                savedNotes.splice(i, 1);
+            }
+        }
 
         res.json({ success: true });
     });
