@@ -5,6 +5,7 @@ const apiRoutes = require('./routes/api.routes');
 
 const PORT = process.env.PORT || 3000;
 
+// EXPRESS
 app.use(express.static('public'));
 
 app.use(express.urlencoded({ extended: true }));
